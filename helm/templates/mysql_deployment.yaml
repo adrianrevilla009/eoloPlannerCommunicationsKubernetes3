@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mysql.name }}
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Values.mysql.name }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mysql.name }}
+    spec:
+      containers:
+        - name: {{ .Values.mysql.name }}
+          image: {{ .Values.mysql.image.name }}:{{ .Values.mysql.image.version }}
+          env:
+            - name: MYSQL_DATABASE
+              value: eoloplantsDB
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc

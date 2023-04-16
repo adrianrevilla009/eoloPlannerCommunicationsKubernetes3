@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.weatherservice.name }}
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Values.weatherservice.name }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.weatherservice.name }}
+    spec:
+      #      securityContext:
+      #        runAsUser: 1001
+      #        runAsGroup: 1000
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.weatherservice.name }}
+          image: {{ .Values.weatherservice.image.name }}:{{ .Values.weatherservice.image.version }}
+          securityContext:
+            allowPrivilegeEscalation: false
+          env:
+            # Environment variables for configuring gRPC listening
+            - name: QUARKUS_GRPC_SERVER_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: QUARKUS_GRPC_SERVER_PORT
+              value: "9090"
+          ports:
+            - containerPort: 9090

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.weatherservice.name }}
+  labels:
+    app: {{ .Values.weatherservice.name }}
+spec:
+  ports:
+    - port: 9090
+      targetPort: 9090
+      protocol: TCP
+      name: {{ .Values.weatherservice.name }}-port
+  selector:
+    app: {{ .Values.weatherservice.name }}
+  type: ClusterIP

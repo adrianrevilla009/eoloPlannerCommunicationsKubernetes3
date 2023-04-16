@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.toposervice.name }}
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Values.toposervice.name }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.toposervice.name }}
+    spec:
+      #      securityContext:
+      #        runAsUser: 1001
+      #        runAsGroup: 1000
+      restartPolicy: Always
+      containers:
+        - name: {{ .Values.toposervice.name }}
+          image: {{ .Values.toposervice.image.name }}:{{ .Values.toposervice.image.version }}
+          securityContext:
+            allowPrivilegeEscalation: false
+          env:
+            # Environment variables for MongoDB connection
+            - name: SPRING_DATA_MONGODB_HOST
+              value: mongodb
+            - name: SPRING_DATA_MONGODB_PORT
+              value: "27017"
+            - name: SPRING_DATA_MONGODB_DATABASE
+              value: topoDB
+            - name: SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE
+              value: admin
+            - name: SPRING_DATA_MONGODB_USERNAME
+              value: root
+            - name: SPRING_DATA_MONGODB_PASSWORD
+              value: password
+          ports:
+            - containerPort: 8181

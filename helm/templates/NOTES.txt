@@ -1,0 +1,33 @@
+Para levantar el chart de helm usamos el siguiente comando:
+helm install eolo-release C:\Proyects\master\Modulo3\7-eoloPlannerCommunicationsKubernetes3\helm
+
+Podemos configurar los siguientes parametros con --set:
+- ingress.enabled
+- ingress.hostEnabled
+- ingress.host
+Ademas de poder definir tanto el nombre, imagen y version de todos los servicios a levantar, por ejemplo:
+- toposervice.name
+- toposervice.image.name
+- toposervice.image.version
+
+Para acceder a la aplicacion:
+{{- if .Values.ingress.enabled }}
+INGRESS HABILITADO
+- Ya que estamos en minikube, aseguramos de que tenemos el plugin del ingress habilitado
+minikube addons enable ingress
+- Despues abrimos el tunnel para que los servicios sean accesibles desde nuestro host por el ingress
+minikube tunnel
+- Finalmente accedemos a la aplicación en los path definidos en el ingress:
+http://localhost/toposervice/api/topographicdetails/Jaca
+http://localhost/
+- Tambien podemos tirar un curl para ver que devuelve un 200 OK
+curl http://localhost/toposervice/api/topographicdetails/Jaca
+curl http://localhost/
+{{- else }}
+INGRESS DESHABILITADO
+- Debemos abrir el tunnel para que nuestros servicios sean accesibles desde nuestro host
+minikube tunnel
+- Debemos exponer el servicio
+minikube service serverservice
+- Acceder
+{{- end }}
