@@ -3,12 +3,12 @@ entries:
   eoloPlannerCommunicationsKubernetes3:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-04-16T17:32:15.5091536+02:00"
+    created: "2023-04-16T17:45:39.5147255+02:00"
     description: A Helm chart for Kubernetes app learning network policies and helm
-    digest: 1c796eb3668e9c34c5776303bac8959e2c00d91e0573736e23111e8572f95b21
+    digest: 986c0422e6efc476c00bfd8d045c4155046b8e462814bbfe418ae80bf76e21f3
     name: eoloPlannerCommunicationsKubernetes3
     type: application
     urls:
     - eoloPlannerCommunicationsKubernetes3-0.1.0.tgz
     version: 0.1.0
-generated: "2023-04-16T17:32:15.5085876+02:00"
+generated: "2023-04-16T17:45:39.5115269+02:00"
