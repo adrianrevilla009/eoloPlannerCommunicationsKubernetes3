@@ -15,10 +15,15 @@ spec:
       labels:
         app: weatherservice
     spec:
+#      securityContext:
+#        runAsUser: 1001
+#        runAsGroup: 1000
       restartPolicy: Always
       containers:
       - name: weatherservice
         image: mastercloudapps/weatherservice:v1.23
+        securityContext:
+          allowPrivilegeEscalation: false
         env:
         # Environment variables for configuring gRPC listening
         - name: QUARKUS_GRPC_SERVER_HOST

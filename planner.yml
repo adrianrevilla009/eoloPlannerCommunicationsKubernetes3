@@ -15,10 +15,15 @@ spec:
       labels:
         app: planner
     spec:
+#      securityContext:
+#        runAsUser: 1001
+#        runAsGroup: 1000
       restartPolicy: Always
       containers:
       - name: planner
         image: mastercloudapps/planner:v1.23
+        securityContext:
+          allowPrivilegeEscalation: false
         command: ["/bin/bash", "-c"]
         args:
         - "./wait-for-it.sh weatherservice:9090 -t 500 -- ./wait-for-it.sh toposervice:8181 -t 500 -- ./wait-for-it.sh rabbitmq:5672 -t 500 -- java -jar planner.jar"

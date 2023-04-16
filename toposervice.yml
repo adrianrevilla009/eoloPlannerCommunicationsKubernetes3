@@ -15,10 +15,15 @@ spec:
       labels:
         app: toposervice
     spec:
+#      securityContext:
+#        runAsUser: 1001
+#        runAsGroup: 1000
       restartPolicy: Always
       containers:
       - name: toposervice
         image: mastercloudapps/toposervice:v1.23
+        securityContext:
+          allowPrivilegeEscalation: false
         env:
         # Environment variables for MongoDB connection
         - name: SPRING_DATA_MONGODB_HOST

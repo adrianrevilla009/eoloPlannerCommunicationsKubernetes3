@@ -15,10 +15,15 @@ spec:
       labels:
         app: serverservice
     spec:
+#      securityContext:
+#        runAsUser: 1001
+#        runAsGroup: 1000
       restartPolicy: Always
       containers:
       - name: serverservice
         image: mastercloudapps/server:v2.23
+        securityContext:
+          allowPrivilegeEscalation: false
         env:
         # Environment variables for MySQL connection
         - name: QUARKUS_DATASOURCE_DB_KIND

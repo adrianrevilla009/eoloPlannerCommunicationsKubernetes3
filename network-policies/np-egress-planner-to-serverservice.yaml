@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: planner-to-serverservice
+spec:
+  podSelector:
+    matchLabels:
+      app: planner
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+            app: serverservice
+      ports:
+        - port: 8080
